@@ -4,16 +4,16 @@ function PlayGameState()
     this.background = new PGBackGround();
     
     //컨트롤러
-    this.imgCtrlLeft = resourcePreLoader.GetImage("/img/game_ctrl_left.png");
-    this.imgCtrlRight = resourcePreLoader.GetImage("/img/game_ctrl_right.png");
+    this.imgCtrlLeft = resourcePreLoader.GetImage("img/game_ctrl_left.png");
+    this.imgCtrlRight = resourcePreLoader.GetImage("img/game_ctrl_right.png");
     // this.imgCtrlDash = resourcePreLoader.GetImage("/.c9/img/game_ctrl_dash.png");
     
     //타이머
     this.timer = new Timer();
     
     //플레이어
-    this.sprPlayer = new SpriteAnimation(resourcePreLoader.GetImage("/img/game_player.png"), 125, 167, 4, 4);
-    this.x = 150;
+    this.sprPlayer = new SpriteAnimation(resourcePreLoader.GetImage("img/game_player.png"), 125, 167, 4, 4);
+    this.x = 200;
     this.y = 200;
     
     this.Invalid();
@@ -21,11 +21,11 @@ function PlayGameState()
     this.isJumpingUp = false;
     this.jumpPower = 0;
     this.dashPower = 0;
-
+    
     //로그
-    this.imgShortlog1 = resourcePreLoader.GetImage("/img/game_shortlog.png");
-    this.imgShortlog2 = resourcePreLoader.GetImage("/img/game_shortlog.png");
-    this.imgShortlog3 = resourcePreLoader.GetImage("/img/game_shortlog.png");
+    this.imgShortlog1 = resourcePreLoader.GetImage("img/game_shortlog.png");
+    this.imgShortlog2 = resourcePreLoader.GetImage("img/game_shortlog.png");
+    this.imgShortlog3 = resourcePreLoader.GetImage("img/game_shortlog.png");
     
     //로그 이동
     this.posShortlog1 = 0+200;
@@ -45,14 +45,10 @@ function PlayGameState()
     
     //점프 후 착지 위치
     this.afterjump_Arr = new Array();
-    // this.afterjump_Arr[0] = 350;
-    // this.afterjump_Arr[1] = 300;
-    // this.afterjump_Arr[2] = 350;
+    
     this.afterjump_Arr.push(350);
     this.afterjump_Arr.push(300);
     this.afterjump_Arr.push(350);
-    
-    this.i = 0;
     
     return this;
 }
@@ -91,11 +87,9 @@ PlayGameState.prototype.Update = function()
 {
     //타이머
     this.timer.Update();
-    if(this.timer.nowFrame < 6000)
-    {
-        //배경
-        this.background.Update();
-    }
+  
+    //배경
+    this.background.Update();
     
     //플레이어 
     this.sprPlayer.Update();
@@ -116,6 +110,7 @@ PlayGameState.prototype.Update = function()
         this.y_log_position_Arr[0] = y_log_position_ud;
         
         this.afterjump_Arr.push(this.y_log_position_Arr[0]);
+        this.afterjump_Arr.shift();
     }
     
     if(this.posShortlog2 < -170)
@@ -129,6 +124,7 @@ PlayGameState.prototype.Update = function()
         this.y_log_position_Arr[1] = y_log_position_ud;
         
         this.afterjump_Arr.push(this.y_log_position_Arr[1]);
+        this.afterjump_Arr.shift();
     }
     
     if(this.posShortlog3 < -170)
@@ -142,9 +138,16 @@ PlayGameState.prototype.Update = function()
         this.y_log_position_Arr[2] = y_log_position_ud;
         
         this.afterjump_Arr.push(this.y_log_position_Arr[2]);
+        this.afterjump_Arr.shift();
     }
     
-    //키보드로 점프
+    //키보드로 이동
+    // if(inputSystem.isKeyDown(37))
+    // {
+    //     this.y = this.afterjump_Arr[1]-150;
+    //     this.Invalid();
+    // }
+    
     if(this.isJumpingUp == false)
     {
         if(inputSystem.isKeyDown(37))
@@ -170,16 +173,15 @@ PlayGameState.prototype.Update = function()
         this.y += this.jumpPower;
         this.jumpPower += 1;
         
-        if(this.y >= this.afterjump_Arr[this.i+1]-150)
+        if(this.y >= this.afterjump_Arr[1]-150)
         {
-            this.y = this.afterjump_Arr[this.i+1]-150;
+            this.y = this.afterjump_Arr[1]-150;
             
             this.isJumpingUp = false;
-            
-            this.i++;
         }
         this.Invalid();
     }
+    
 };
 
 PlayGameState.prototype.onMouseDown = function()
