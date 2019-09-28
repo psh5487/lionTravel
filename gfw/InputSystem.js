@@ -11,9 +11,9 @@ window.addEventListener("mouseup", onMouseUp, false);
 window.addEventListener("click", onClicked, false);
 
 //터치 이벤트
-// window.addEventListener("touchstart", onTouchStart, false);
-// window.addEventListener("touchmove", onTouchMove, false);
-// window.addEventListener("touchend", onTouchEnd, false);
+window.addEventListener("touchstart", onTouchStart, false);
+window.addEventListener("touchmove", onTouchMove, false);
+window.addEventListener("touchend", onTouchEnd, false);
 
 function InputSystem()
 {
@@ -21,6 +21,10 @@ function InputSystem()
     this.mouseX = 0;
     this.mouseY = 0;
     this.mouseClicked = false;
+    
+    //터치 입력 정보
+    this.touchX = 0;
+    this.touchY = 0;
     
     //키 입력 정보 배열
     this.isKeyPressed = [];
@@ -63,6 +67,16 @@ function onKeyUp(e)
 }
 
 //마우스 입력 함수
+function onClicked(e)
+{
+	var theCanvas = document.getElementById("GameCanvas");
+	inputSystem.mouseX = e.clientX - theCanvas.offsetLeft;
+	inputSystem.mouseY = e.clientY - theCanvas.offsetTop;
+	
+	inputSystem.mouseClicked = true;
+// 	alert("x:" + mouseX + " y:" + mouseY);  
+}
+
 function onMouseDown(e)
 {
 	var theCanvas = document.getElementById("GameCanvas");
@@ -91,39 +105,27 @@ function onMouseUp(e)
 	inputSystem.mouseClicked = false;
 }
 
-
-//마우스 클릭
-function onClicked(e)
+//터치 입력 함수
+function onTouchStart(e)
 {
-	var theCanvas = document.getElementById("GameCanvas");
-	inputSystem.mouseX = e.clientX - theCanvas.offsetLeft;
-	inputSystem.mouseY = e.clientY - theCanvas.offsetTop;
-	
-	inputSystem.mouseClicked = true;
-// 	alert("x:" + mouseX + " y:" + mouseY);  
+    var theCanvas = document.getElementById("GameCanvas");
+	inputSystem.touchX = e.touches[0].clientX;
+	inputSystem.touchY = e.touches[0].clientY;
 }
 
-//터치
-// function onTouchStart(e)
-// {
-//     var theCanvas = document.getElementById("GameCanvas");
-// 	inputSystem.touchX = e.touches[0].clientX;
-// 	inputSystem.touchY = e.touches[0].clientY;
-// }
+function onTouchMove(e)
+{
+    var theCanvas = document.getElementById("GameCanvas");
+	inputSystem.touchX = e.touches[0].clientX;
+	inputSystem.touchY = e.touches[0].clientY;
+}
 
-// function onTouchMove(e)
-// {
-//     var theCanvas = document.getElementById("GameCanvas");
-// 	inputSystem.touchX = e.touches[0].clientX;
-// 	inputSystem.touchY = e.touches[0].clientY;
-// }
-
-// function onTouchEnd(e)
-// {
-//     var theCanvas = document.getElementById("GameCanvas");
-// 	inputSystem.touchX = e.touches[0].clientX;
-// 	inputSystem.touchY = e.touches[0].clientY;
-// }
+function onTouchEnd(e)
+{
+    var theCanvas = document.getElementById("GameCanvas");
+	inputSystem.touchX = e.touches[0].clientX;
+	inputSystem.touchY = e.touches[0].clientY;
+}
 
 var inputSystem = new InputSystem();
 

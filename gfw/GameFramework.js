@@ -1,10 +1,13 @@
+//키보드 이벤트
 window.addEventListener("keydown", onKeyDown, false);
 window.addEventListener("keyup", onKeyUp, false);
 
+//마우스 이벤트
 window.addEventListener("mousedown", onMouseDown, false);
 window.addEventListener("mouseup", onMouseUp, false);
 window.addEventListener("click", onClicked, false);
 
+//터치 이벤트
 // window.addEventListener("touchstart", onTouchStart, false);
 // window.addEventListener("touchmove", onTouchMove, false);
 // window.addEventListener("touchend", onTouchEnd, false);
@@ -28,7 +31,9 @@ function onMouseDown(e)
 {
     if(game_state.onMouseDown != undefined)
         game_state.onMouseDown(e);
-        
+    
+    e.stopPropagation();
+    e.preventDefault();
     // alert("x:" + inputSystem.mouseX + " y:" + inputSystem.mouseY);
 }
 
@@ -36,37 +41,41 @@ function onMouseUp(e)
 {
     if(game_state.onMouseUp != undefined)
         game_state.onMouseUp(e);
+        
+    e.preventDefault();
 }
 
 function onClicked(e)
 {
     if(game_state.onClicked != undefined)
         game_state.onClicked(e);
-}
-
-function onTouchStart(e)
-{
-    if(game_state.onTouchStart != undefined)
-        game_state.onTouchStart(e);
         
     e.preventDefault();
 }
 
-function onTouchMove(e)
-{
-    if(game_state.onTouchMove != undefined)
-        game_state.onTouchMove(e);
+// function onTouchStart(e)
+// {
+//     if(game_state.onTouchStart != undefined)
+//         game_state.onTouchStart(e);
         
-    e.preventDefault();
-}
+//     e.preventDefault();
+// }
 
-function onTouchEnd(e)
-{
-    if(game_state.onTouchEnd != undefined)
-        game_state.onTouchEnd(e);
-    
-    e.preventDefault();
-}
+// function onTouchMove(e)
+// {
+//     if(game_state.onTouchMove != undefined)
+//         game_state.onTouchMove(e);
+        
+//     e.preventDefault();
+// }
+
+// function onTouchEnd(e)
+// {
+//     if(game_state.onTouchEnd != undefined)
+//         game_state.onTouchEnd(e);
+        
+//     e.preventDefault();
+// }
 
 function ChangeGameState(nextGameState)
 {
@@ -111,10 +120,10 @@ function GameRender()
     if(debugSystem.debugMode)
     {
         //fps 표시
-        Context.fillStyle = "#ffffff";
-        Context.font = '15px Arial';
-        Context.textBaseline = "top";
-        Context.fillText("fps: "+ frameCounter.Lastfps, 10, 10);
+        // Context.fillStyle = "#ffffff";
+        // Context.font = '15px Arial';
+        // Context.textBaseline = "top";
+        // Context.fillText("fps: "+ frameCounter.Lastfps, 10, 10);
     }
 }
 

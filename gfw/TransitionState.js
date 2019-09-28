@@ -20,7 +20,7 @@ TransitionFadeOut.prototype.Render = function()
     
     context.globalAlpha = this.alpha/255;
     context.fillStyle = "#000000";
-    context.fillRect(0, 0, 800, 600);
+    context.fillRect(0, 0, 1000, 600);
     context.globalAlpha = oldAlpha;
     context.fillStyle = oldFillStyle;
 };
@@ -56,7 +56,7 @@ TransitionFadeIn.prototype.Render = function()
     
     context.globalAlpha = this.alpha/255;
     context.fillStyle = "#000000";
-    context.fillRect(0, 0, 800, 600);
+    context.fillRect(0, 0, 1000, 600);
     context.globalAlpha = oldAlpha;
     context.fillStyle = oldFillStyle;
 };
